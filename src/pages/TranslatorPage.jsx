@@ -9,9 +9,9 @@ import hashtagIcon from '../assets/hashtag-icon.png';
 import informalFrog from '../assets/Informal Frog.png';
 import formalFrog from '../assets/Formal Frog.png';
 
-const CARD_WRAPPER_CLASSES = 'flex h-[450px] w-[655px] flex-col items-start gap-6 rounded-[20px] bg-[var(--card-bg)] p-6';
+const CARD_WRAPPER_CLASSES = 'flex h-[300px] w-full flex-col items-start gap-6 rounded-[20px] bg-[var(--card-bg)] p-6 sm:h-[380px] lg:h-[450px] lg:w-[655px]';
 const HEADER_LABEL_CLASSES = 'text-[16px] font-bold uppercase leading-[0.8] tracking-[2.56px] text-[var(--brand-blue)]';
-const HEADER_TITLE_CLASSES = 'text-[20px] font-hero leading-[0.8] text-[var(--text-dark)]';
+const HEADER_TITLE_CLASSES = 'text-[14px] font-hero leading-[0.8] text-[var(--text-dark)] lg:text-[20px]';
 const COUNT_CLASSES = 'text-[16px] font-bold leading-[0.8] text-[var(--text-dark)]';
 const ACTION_BUTTON_CLASSES =
   'group relative flex items-center justify-center gap-2 overflow-hidden rounded-[100px] bg-[var(--cta-lime)] text-[16px] font-bold leading-[0.8] text-[var(--text-dark)] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0_12px_24px_rgba(0,0,0,0.18)] disabled:cursor-not-allowed disabled:bg-[var(--disabled-bg)] disabled:text-ink/40';
@@ -60,12 +60,12 @@ export default function TranslatorPage() {
   }
 
   return (
-    <section className="relative h-screen w-screen overflow-hidden bg-[var(--brand-blue)]">
+    <section className="relative min-h-screen w-screen overflow-x-hidden bg-[var(--brand-blue)] lg:h-screen lg:overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,var(--grid-overlay),var(--grid-overlay)),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px),linear-gradient(0deg,var(--grid-line)_1px,transparent_1px)] bg-[length:100%_100%,42px_42px,42px_42px]" />
       <motion.img
         src={arrowC}
         alt="Arrow icon"
-        className="pointer-events-none absolute right-[65px] top-[193px] z-20 h-[112px] w-[110.014px]"
+        className="pointer-events-none absolute right-[65px] top-[193px] z-20 h-[112px] w-[110.014px] hidden lg:block"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.15 }}
@@ -73,7 +73,7 @@ export default function TranslatorPage() {
       <motion.img
         src={arrowCurved}
         alt="Curved arrow icon"
-        className="pointer-events-none absolute bottom-[5px] left-[112px] z-20 h-[110px] w-[114.948px]"
+        className="pointer-events-none absolute bottom-[5px] left-[112px] z-20 h-[110px] w-[114.948px] hidden lg:block"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
@@ -81,7 +81,7 @@ export default function TranslatorPage() {
       <motion.img
         src={hashtagIcon}
         alt="Hashtag icon"
-        className="pointer-events-none absolute left-[615px] top-[55px] z-20 h-[54.801px] w-[48.638px] -rotate-[5.398deg]"
+        className="pointer-events-none absolute left-[615px] top-[55px] z-20 h-[54.801px] w-[48.638px] -rotate-[5.398deg] hidden lg:block"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
@@ -89,7 +89,7 @@ export default function TranslatorPage() {
       <motion.img
         src={informalFrog}
         alt="Informal frog icon"
-        className="pointer-events-none absolute left-[168px] top-[101px] z-0"
+        className="pointer-events-none absolute left-[168px] top-[101px] z-0 hidden lg:block"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.8 }}
@@ -97,25 +97,25 @@ export default function TranslatorPage() {
       <motion.img
         src={formalFrog}
         alt="Formal frog icon"
-        className="pointer-events-none absolute right-[168px] top-[101px] z-0"
+        className="pointer-events-none absolute right-[168px] top-[101px] z-0 hidden lg:block"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.8 }}
       />
-      <div className="relative z-10 flex flex-col items-center pt-[80px]">
+      <div className="relative z-10 flex flex-col items-center px-4 pt-10 pb-10 lg:px-0 lg:pt-[80px] lg:pb-0">
         <motion.div
           initial={{ opacity: 0, y: -18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <Link to="/" className="text-center font-hero text-[48px] font-black uppercase leading-[0.8] text-[var(--text-light)]">
+          <Link to="/" className="text-center font-hero text-[28px] font-black uppercase leading-[0.8] text-[var(--text-light)] sm:text-[38px] lg:text-[48px]">
             <span className="block">LET&apos;S</span>
             <span className="block">TAKE THIS</span>
             <span className="block">OFFLINE</span>
           </Link>
         </motion.div>
         <motion.div
-          className="mt-[63px] flex items-center justify-center gap-8"
+          className="mt-8 flex w-full flex-col items-center justify-center gap-6 lg:mt-[63px] lg:w-auto lg:flex-row lg:gap-8"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}

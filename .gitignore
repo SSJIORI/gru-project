@@ -23,7 +23,7 @@ vite-preview.err.log
 # Editor / OS
 .DS_Store
 Thumbs.db
-.vscode/settings.json
+.vscode/
 
 # Cache
 .cache/

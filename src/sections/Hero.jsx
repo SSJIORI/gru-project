@@ -20,39 +20,39 @@ export default function Hero() {
           <motion.img
             src={hashtagIcon}
             alt="Hashtag icon"
-            className="pointer-events-none absolute left-[165px] -top-8 h-24 w-24"
+            className="pointer-events-none absolute left-[20px] -top-2 h-12 w-12 sm:left-[130px] sm:-top-8 sm:h-16 sm:w-16 lg:left-[165px] lg:h-24 lg:w-24"
             animate={{ y: [0, -8, 0], rotate: [0, 3, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.img
             src={leftFrogIcon}
             alt="Left frog icon"
-            className="pointer-events-none absolute left-[-20px] top-[-80px] h-[150px] w-[150px] -rotate-[12.71deg]"
+            className="pointer-events-none absolute left-[-20px] top-[-80px] h-[150px] w-[150px] -rotate-[12.71deg] hidden lg:block"
             animate={{ y: [0, -6, 0], rotate: [-12.71, -10.5, -12.71] }}
             transition={{ duration: 7.5, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.img
             src={arrowC}
             alt="Arrow icon"
-            className="pointer-events-none absolute left-[732px] top-[12px] h-36 w-36"
+            className="pointer-events-none absolute right-[20px] top-[8px] h-14 w-14 sm:left-[475px] sm:top-[10px] sm:h-24 sm:w-24 lg:left-[732px] lg:top-[12px] lg:h-36 lg:w-36"
             animate={{ y: [0, 10, 0], rotate: [0, -2, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.img
             src={arrowCurved}
             alt="Curved arrow icon"
-            className="pointer-events-none absolute left-[32px] top-[252px] h-36 w-36"
+            className="pointer-events-none absolute left-[10px] top-[95px] h-14 w-14 sm:left-[20px] sm:top-[175px] sm:h-24 sm:w-24 lg:left-[32px] lg:top-[252px] lg:h-36 lg:w-36"
             animate={{ y: [0, -6, 0], rotate: [0, 2, 0] }}
             transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.img
             src={rightFrogIcon}
             alt="Right frog icon"
-            className="pointer-events-none absolute bottom-[-20px] right-[-120px] h-[200px] w-[200px] rotate-[7.911deg]"
+            className="pointer-events-none absolute bottom-[-20px] right-[-120px] h-[200px] w-[200px] rotate-[7.911deg] hidden lg:block"
             animate={{ y: [0, 8, 0], rotate: [7.911, 9.2, 7.911] }}
             transition={{ duration: 7.2, repeat: Infinity, ease: 'easeInOut' }}
           />
-          <h1 className="text-center font-hero text-[140px] font-black uppercase leading-[0.8] text-[var(--text-light)]">
+          <h1 className="text-center font-hero text-[52px] sm:text-[90px] lg:text-[140px] font-black uppercase leading-[0.8] text-[var(--text-light)]">
             <span className="block">LET&apos;S</span>
             <span className="block">TAKE THIS</span>
             <span className="block">OFFLINE</span>
