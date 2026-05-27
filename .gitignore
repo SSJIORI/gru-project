@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Vite logs
+*.log
+vite-dev.log
+vite-dev.err.log
+vite-preview.log
+vite-preview.err.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Claude Code
+.claude/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/settings.json
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache
