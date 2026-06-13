@@ -17,6 +17,11 @@ const ACTION_BUTTON_CLASSES =
   'group relative flex items-center justify-center gap-2 overflow-hidden rounded-[100px] bg-[var(--cta-lime)] text-[16px] font-bold leading-[0.8] text-[var(--text-dark)] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0_12px_24px_rgba(0,0,0,0.18)] disabled:cursor-not-allowed disabled:bg-[var(--disabled-bg)] disabled:text-ink/40';
 const SHINE_SPAN_CLASSES =
   'pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-white/70 to-transparent transition duration-700 group-enabled:group-hover:translate-x-[120%]';
+const API_URL = import.meta.env.VITE_REWRITE_API_URL ?? 'http://127.0.0.1:8000/rewrite';
+const MODEL_OPTIONS = [
+  { id: 'gru', label: 'GRU' },
+  { id: 'flan', label: 'FLAN-T5' },
+];
 
 function CardHeader({ label, title }) {
   return (
@@ -31,12 +36,53 @@ function CardHeader({ label, title }) {
 export default function TranslatorPage() {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
+  const [selectedModel, setSelectedModel] = useState('gru');
+  const [isTranslating, setIsTranslating] = useState(false);
 
   const wordCount = inputText.trim().split(/\s+/).filter(Boolean).length;
-  const isTranslateDisabled = wordCount < 2;
+  const isTranslateDisabled = wordCount < 2 || isTranslating;
 
-  function handleTranslate() {
-    setOutputText('Thanks for sharing this. Here is a calmer, more professional version you can send.');
+  async function handleTranslate() {
+    setIsTranslating(true);
+    setOutputText('');
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: inputText,
+          model: selectedModel,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      const nextOutput = data.outputs?.[0] ?? data.output ?? data.text ?? '';
+
+      if (!nextOutput) {
+        throw new Error('The model returned an empty response.');
+      }
+
+      setOutputText(nextOutput);
+    } catch (error) {
+      console.error('Failed to translate message', error);
+      toast.error('Model backend is unavailable', {
+        style: {
+          background: 'var(--toast-bg)',
+          color: 'var(--toast-text)',
+          fontWeight: 700,
+          borderRadius: '999px',
+        },
+      });
+    } finally {
+      setIsTranslating(false);
+    }
   }
 
   async function handleCopyOutput() {
@@ -115,7 +161,29 @@ export default function TranslatorPage() {
           </Link>
         </motion.div>
         <motion.div
-          className="mt-8 flex w-full flex-col items-center justify-center gap-6 lg:mt-[63px] lg:w-auto lg:flex-row lg:gap-8"
+          className="mt-8 flex h-[48px] items-center rounded-full border border-white/30 bg-white/15 p-1 backdrop-blur"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.08 }}
+        >
+          {MODEL_OPTIONS.map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => setSelectedModel(option.id)}
+              className={`h-10 min-w-[104px] rounded-full px-5 text-[13px] font-bold uppercase tracking-[1.6px] transition ${
+                selectedModel === option.id
+                  ? 'bg-[var(--cta-lime)] text-[var(--text-dark)] shadow-[0_8px_20px_rgba(0,0,0,0.16)]'
+                  : 'text-white/85 hover:bg-white/10 hover:text-white'
+              }`}
+              aria-pressed={selectedModel === option.id}
+            >
+              {option.label}
+            </button>
+          ))}
+        </motion.div>
+        <motion.div
+          className="mt-8 flex w-full flex-col items-center justify-center gap-6 lg:mt-[48px] lg:w-auto lg:flex-row lg:gap-8"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
@@ -154,7 +222,7 @@ export default function TranslatorPage() {
                 disabled={isTranslateDisabled}
               >
                 <span className={SHINE_SPAN_CLASSES} />
-                TRANSLATE
+                {isTranslating ? 'WORKING' : 'TRANSLATE'}
               </button>
             </div>
           </motion.div>
