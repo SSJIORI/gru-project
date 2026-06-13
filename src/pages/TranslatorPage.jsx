@@ -108,47 +108,48 @@ export default function TranslatorPage() {
   return (
     <section className="relative min-h-screen w-screen overflow-x-hidden bg-[var(--brand-blue)] lg:h-screen lg:overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,var(--grid-overlay),var(--grid-overlay)),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px),linear-gradient(0deg,var(--grid-line)_1px,transparent_1px)] bg-[length:100%_100%,42px_42px,42px_42px]" />
-      <motion.img
-        src={arrowC}
-        alt="Arrow icon"
-        className="pointer-events-none absolute right-[65px] top-[193px] z-20 h-[112px] w-[110.014px] hidden lg:block"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.15 }}
-      />
-      <motion.img
-        src={arrowCurved}
-        alt="Curved arrow icon"
-        className="pointer-events-none absolute bottom-[5px] left-[112px] z-20 h-[110px] w-[114.948px] hidden lg:block"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      />
-      <motion.img
-        src={hashtagIcon}
-        alt="Hashtag icon"
-        className="pointer-events-none absolute left-[615px] top-[55px] z-20 h-[54.801px] w-[48.638px] -rotate-[5.398deg] hidden lg:block"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      />
-      <motion.img
-        src={informalFrog}
-        alt="Informal frog icon"
-        className="pointer-events-none absolute left-[168px] top-[101px] z-0 hidden lg:block"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-      />
-      <motion.img
-        src={formalFrog}
-        alt="Formal frog icon"
-        className="pointer-events-none absolute right-[168px] top-[101px] z-0 hidden lg:block"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-      />
-      <div className="relative z-10 flex flex-col items-center px-4 pt-10 pb-10 lg:px-0 lg:pt-[80px] lg:pb-0">
+      <div className="relative mx-auto w-full max-w-[1440px] lg:h-full">
+        <motion.img
+          src={arrowC}
+          alt="Arrow icon"
+          className="pointer-events-none absolute right-[65px] top-[220px] z-20 h-[112px] w-[110.014px] hidden lg:block"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+        />
+        <motion.img
+          src={arrowCurved}
+          alt="Curved arrow icon"
+          className="pointer-events-none absolute bottom-[5px] left-[130px] z-20 h-[110px] w-[114.948px] hidden lg:block"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        />
+        <motion.img
+          src={hashtagIcon}
+          alt="Hashtag icon"
+          className="pointer-events-none absolute left-[590px] top-[20px] z-20 h-[54.801px] w-[48.638px] -rotate-[5.398deg] hidden lg:block"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        />
+        <motion.img
+          src={informalFrog}
+          alt="Informal frog icon"
+          className="pointer-events-none absolute left-[168px] top-[130px] z-0 hidden lg:block"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        />
+        <motion.img
+          src={formalFrog}
+          alt="Formal frog icon"
+          className="pointer-events-none absolute right-[168px] top-[130px] z-0 hidden lg:block"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        />
+      <div className="relative z-10 flex flex-col items-center px-4 pt-5 pb-10 lg:px-0 lg:pt-[40px] lg:pb-0">
         <motion.div
           initial={{ opacity: 0, y: -18 }}
           animate={{ opacity: 1, y: 0 }}
@@ -255,6 +256,7 @@ export default function TranslatorPage() {
             </div>
           </motion.div>
         </motion.div>
+      </div>
       </div>
     </section>
   );
