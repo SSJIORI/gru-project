@@ -35,16 +35,19 @@ function CardHeader({ label, title }) {
 
 export default function TranslatorPage() {
   const [inputText, setInputText] = useState('');
-  const [outputText, setOutputText] = useState('');
+  const [outputOptions, setOutputOptions] = useState([]);
+  const [selectedOutputIndex, setSelectedOutputIndex] = useState(0);
   const [selectedModel, setSelectedModel] = useState('gru');
   const [isTranslating, setIsTranslating] = useState(false);
 
   const wordCount = inputText.trim().split(/\s+/).filter(Boolean).length;
   const isTranslateDisabled = wordCount < 2 || isTranslating;
+  const selectedOutput = outputOptions[selectedOutputIndex]?.text ?? '';
 
   async function handleTranslate() {
     setIsTranslating(true);
-    setOutputText('');
+    setOutputOptions([]);
+    setSelectedOutputIndex(0);
 
     try {
       const response = await fetch(API_URL, {
@@ -63,13 +66,22 @@ export default function TranslatorPage() {
       }
 
       const data = await response.json();
-      const nextOutput = data.outputs?.[0] ?? data.output ?? data.text ?? '';
+      const nextOptions = Array.isArray(data.options) && data.options.length > 0
+        ? data.options.map((option) => ({
+            text: option.text,
+            score: option.score ?? null,
+          }))
+        : (data.outputs ?? [data.output ?? data.text]).filter(Boolean).map((text) => ({
+            text,
+            score: null,
+          }));
 
-      if (!nextOutput) {
+      if (nextOptions.length === 0) {
         throw new Error('The model returned an empty response.');
       }
 
-      setOutputText(nextOutput);
+      setOutputOptions(nextOptions.slice(0, 3));
+      setSelectedOutputIndex(0);
     } catch (error) {
       console.error('Failed to translate message', error);
       toast.error('Model backend is unavailable', {
@@ -86,12 +98,12 @@ export default function TranslatorPage() {
   }
 
   async function handleCopyOutput() {
-    if (!outputText) {
+    if (!selectedOutput) {
       return;
     }
 
     try {
-      await navigator.clipboard.writeText(outputText);
+      await navigator.clipboard.writeText(selectedOutput);
       toast.success('Copied', {
         style: {
           background: 'var(--toast-bg)',
@@ -234,21 +246,37 @@ export default function TranslatorPage() {
             transition={{ duration: 0.6, delay: 0.35 }}
           >
             <CardHeader label="OUTPUT" title="WHAT YOU SHOULD SAY" />
-            <div className="flex w-full flex-1 flex-col items-start gap-4 self-stretch rounded-[16px] bg-[var(--input-bg)] px-4 py-6">
-              <textarea
-                className="h-full w-full resize-none bg-transparent text-sm font-medium text-ink/90 outline-none placeholder:text-ink/50 custom-scrollbar"
-                placeholder="Your translated message will appear here..."
-                value={outputText}
-                readOnly
-              />
+            <div className="flex w-full flex-1 flex-col items-start gap-3 self-stretch overflow-y-auto rounded-[16px] bg-[var(--input-bg)] px-4 py-5 custom-scrollbar">
+              {outputOptions.length === 0 ? (
+                <p className="text-sm font-medium text-ink/50">Your translated message will appear here...</p>
+              ) : (
+                outputOptions.map((option, index) => (
+                  <button
+                    key={`${option.text}-${index}`}
+                    type="button"
+                    onClick={() => setSelectedOutputIndex(index)}
+                    className={`w-full rounded-[14px] border px-4 py-3 text-left text-sm font-medium leading-relaxed text-ink/90 transition ${
+                      selectedOutputIndex === index
+                        ? 'border-[var(--brand-blue)] bg-white shadow-[0_8px_18px_rgba(0,0,0,0.08)]'
+                        : 'border-transparent bg-white/45 hover:bg-white/70'
+                    }`}
+                  >
+                    <span className="mb-2 block text-[11px] font-bold uppercase tracking-[1.4px] text-[var(--brand-blue)]">
+                      Option {index + 1}
+                      {option.score !== null ? ` · ${option.score.toFixed(3)}` : ''}
+                    </span>
+                    {option.text}
+                  </button>
+                ))
+              )}
             </div>
             <div className="flex w-full items-center justify-between self-stretch">
-              <span className={COUNT_CLASSES}>{outputText.length} CHARS</span>
+              <span className={COUNT_CLASSES}>{selectedOutput.length} CHARS</span>
               <button
                 type="button"
                 className={`${ACTION_BUTTON_CLASSES} px-6 py-4`}
                 onClick={handleCopyOutput}
-                disabled={!outputText}
+                disabled={!selectedOutput}
               >
                 <span className={SHINE_SPAN_CLASSES} />
                 <Clipboard size={20} />
